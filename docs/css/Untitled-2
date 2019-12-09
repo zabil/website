@@ -1,0 +1,1260 @@
+<?php
+session_start();
+require_once 'dbconfig.php';
+error_reporting(0);
+
+if(isset($_POST['processVerification']))
+{
+	
+	//set the random id length 
+$random_id_length = 2; 
+
+//generate a random id encrypt it and store it in $rnd_id 
+$rnd_id = (uniqid(rand(),1)); 
+
+//to remove any slashes that might have come 
+$rnd_id = strip_tags(stripslashes($rnd_id)); 
+
+//Removing any . or / and reversing the string 
+$rnd_id = str_replace(".","",$rnd_id); 
+$rnd_id = strrev(str_replace("/","",$rnd_id)); 
+
+//finally I take the first 10 characters from the $rnd_id 
+$rnd_id = substr($rnd_id,0,$random_id_length); 
+
+//echo $rnd_id ;
+
+$today=date('Y-m-d');
+$todays=date('Ymd');
+
+date_default_timezone_set("Asia/Kolkata");
+$todaytime=date("d-m-Y H:i:sa");     
+$unique=$todays.$rnd_id;
+$email_user = $_SESSION['user_email'];
+
+	
+	$verification_unique_id = $unique;
+    $service      = $_POST['service'];
+    $fullName     = $_POST['fullName'];
+	$fathername     = $_POST['fathername'];
+    $mobile  = $_POST['mobile'];
+	$alternativemobile  			= $_POST['alternativemobile'];
+	$country  = $_POST['country'];
+	$state  = $_POST['state'];
+	$district  = $_POST['district'];
+	$acceptverficationchecks  = $_POST['acceptverficationchecks'];
+	$candidate_name  = $_POST['candidate_name'];
+	$register_number  = $_POST['register_number'];
+	$college_name  = $_POST['college_name'];
+	$admission_year  = $_POST['admission_year'];
+	$completion_year  = $_POST['completion_year'];
+	$comments  = $_POST['comments'];
+	$division  = $_POST['division'];
+	$degree_obtained  = $_POST['degree_obtained'];
+	$subject_major  = $_POST['subject_major'];
+	$course_type  = $_POST['course_type'];
+	$university  = $_POST['university'];
+	$university_location  = $_POST['university_location'];
+	$status = "";
+	$date_created   = date('Y-m-d H:i:s');
+	$session_user_id   = $_SESSION['user_email'];
+	$type  = $_POST['type'];
+    
+	
+	$rand0 = mt_rand(100000,999999);
+	$rand1 = mt_rand(100000,999999);
+	$rand2 = mt_rand(100000,999999);
+	$rand3 = mt_rand(100000,999999);
+	$rand4 = mt_rand(100000,999999);
+	$rand5 = mt_rand(100000,999999);
+	$rand6 = mt_rand(100000,999999);
+	$rand7 = mt_rand(100000,999999);
+	$rand8 = mt_rand(100000,999999);
+
+
+							 
+
+   if(!empty($_FILES['file1'])){
+      $errors= array();
+       $filename = trim(addslashes($_FILES['file1']['name']));
+      $filename = str_replace(' ', '_', $filename);
+      $file_name = time().$rand0.$filename;
+      $file_size =$_FILES['file1']['size'];
+      $file_tmp =$_FILES['file1']['tmp_name'];
+      $file_type=$_FILES['file1']['type'];
+	  $file1= $file_name;
+	  
+      $file_ext_var1= explode('.',$file1);
+	  $file_ext = end($file_ext_var1);
+      
+      $expensions= array("jpeg","jpg","png","pdf");
+      
+      if(in_array($file_ext,$expensions)=== false){
+         $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+      }
+      
+      if($file_size > 5097152){
+         $errors[]='File size must be excately 2 MB';
+      }
+      
+      if(empty($errors)==true){
+         move_uploaded_file($file_tmp,"uploads/verification/".$file_name);
+         
+         
+          
+      }else{
+           echo '<script language="javascript">';
+        echo 'alert("Invalid file format. Allowed Extensions JPEG,JPG,PNG,PDF. Resubmit the form with valid Parameters!!")';
+        echo '</script>';
+
+        $URL="education-verification.php";
+        echo "<script>location.href='$URL'</script>";
+
+        exit;
+
+      }
+   }
+   
+     if(!empty($_FILES['file2']['name'])){
+      $errors= array();
+      $filename = trim(addslashes($_FILES['file2']['name']));
+      $filename = str_replace(' ', '_', $filename);
+      $file_name = time().$rand1.$filename;
+      $file_size =$_FILES['file2']['size'];
+      $file_tmp =$_FILES['file2']['tmp_name'];
+      $file_type=$_FILES['file2']['type'];
+	  $file2= $file_name;
+	  
+       $file_ext_var2 = explode('.',$file2);
+	  $file_ext = end($file_ext_var2);
+      
+      $expensions= array("jpeg","jpg","png","pdf");
+      
+      if(in_array($file_ext,$expensions)=== false){
+         $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+      }
+      
+      if($file_size > 5097152){
+         $errors[]='File size must be excately 2 MB';
+      }
+      
+      if(empty($errors)==true){
+         move_uploaded_file($file_tmp,"uploads/verification/".$file_name);
+         //echo "Success";
+      }else{
+            echo '<script language="javascript">';
+        echo 'alert("Invalid file format. Allowed Extensions JPEG,JPG,PNG,PDF. Resubmit the form with valid Parameters!!")';
+        echo '</script>';
+
+        $URL="education-verification.php";
+        echo "<script>location.href='$URL'</script>";
+
+          exit;
+      }
+   }
+
+
+  
+   
+   
+     if(!empty($_FILES['file3']['name'])){
+      $errors= array();
+      $filename = trim(addslashes($_FILES['file3']['name']));
+      $filename = str_replace(' ', '_', $filename);
+      $file_name = time().$rand2.$filename;
+      $file_size =$_FILES['file3']['size'];
+      $file_tmp =$_FILES['file3']['tmp_name'];
+      $file_type=$_FILES['file3']['type'];
+	  $file3= $file_name;
+	  
+       $file_ext_var3 = explode('.',$file3);
+	  $file_ext = end($file_ext_var3);
+      
+      $expensions= array("jpeg","jpg","png","pdf");
+      
+      if(in_array($file_ext,$expensions)=== false){
+         $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+      }
+      
+      if($file_size > 5097152){
+         $errors[]='File size must be excately 2 MB';
+      }
+      
+      if(empty($errors)==true){
+         move_uploaded_file($file_tmp,"uploads/verification/".$file_name);
+         //echo "Success";
+      }else{
+           echo '<script language="javascript">';
+        echo 'alert("Invalid file format. Allowed Extensions JPEG,JPG,PNG,PDF. Resubmit the form with valid Parameters!!")';
+        echo '</script>';
+
+        $URL="education-verification.php";
+        echo "<script>location.href='$URL'</script>";
+
+          exit;
+      }
+   }
+   
+     if(!empty($_FILES['file4']['name'])){
+      $errors= array();
+      $filename = trim(addslashes($_FILES['file4']['name']));
+      $filename = str_replace(' ', '_', $filename);
+      $file_name = time().$rand3.$filename;
+      $file_size =$_FILES['file4']['size'];
+      $file_tmp =$_FILES['file4']['tmp_name'];
+      $file_type=$_FILES['file4']['type'];
+	  $file4= $file_name;
+	  
+      //$file_ext=strtolower(end(explode('.',$_FILES['file4']['name'])));
+       $file_ext_var4 = explode('.',$file4);
+	  $file_ext = end($file_ext_var4);
+	  
+      $expensions= array("jpeg","jpg","png","pdf");
+      
+      if(in_array($file_ext,$expensions)=== false){
+         $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+      }
+      
+      if($file_size > 5097152){
+         $errors[]='File size must be excately 2 MB';
+      }
+      
+      if(empty($errors)==true){
+         move_uploaded_file($file_tmp,"uploads/verification/".$file_name);
+         //echo "Success";
+      }else{
+            echo '<script language="javascript">';
+        echo 'alert("Invalid file format. Allowed Extensions JPEG,JPG,PNG,PDF. Resubmit the form with valid Parameters!!")';
+        echo '</script>';
+
+        $URL="education-verification.php";
+        echo "<script>location.href='$URL'</script>";
+
+          exit;
+      }
+   }
+   
+     if(!empty($_FILES['file5']['name'])){
+      $errors= array();
+      $filename = trim(addslashes($_FILES['file5']['name']));
+      $filename = str_replace(' ', '_', $filename);
+      $file_name = time().$rand4.$filename;
+      $file_size =$_FILES['file5']['size'];
+      $file_tmp =$_FILES['file5']['tmp_name'];
+      $file_type=$_FILES['file5']['type'];
+	  $file5= $file_name;
+	  
+      $file_ext_var5 = explode('.',$file5);
+	  $file_ext = end($file_ext_var5);
+      
+      $expensions= array("jpeg","jpg","png","pdf");
+      
+      if(in_array($file_ext,$expensions)=== false){
+         $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+      }
+      
+      if($file_size > 5097152){
+         $errors[]='File size must be excately 2 MB';
+      }
+      
+      if(empty($errors)==true){
+         move_uploaded_file($file_tmp,"uploads/verification/".$file_name);
+         //echo "Success";
+      }else{
+            echo '<script language="javascript">';
+        echo 'alert("Invalid file format. Allowed Extensions JPEG,JPG,PNG,PDF. Resubmit the form with valid Parameters!!")';
+        echo '</script>';
+
+        $URL="education-verification.php";
+        echo "<script>location.href='$URL'</script>";
+
+          exit;
+      }
+   }
+   
+     if(!empty($_FILES['file6']['name'])){
+      $errors= array();
+       $filename = trim(addslashes($_FILES['file6']['name']));
+      $filename = str_replace(' ', '_', $filename);
+      $file_name = time().$rand5.$filename;
+      $file_size =$_FILES['file6']['size'];
+      $file_tmp =$_FILES['file6']['tmp_name'];
+      $file_type=$_FILES['file6']['type'];
+	  $file6= $file_name;
+	  
+      $file_ext_var6 = explode('.',$file6);
+	  $file_ext = end($file_ext_var6);
+      
+      $expensions= array("jpeg","jpg","png","pdf");
+      
+      if(in_array($file_ext,$expensions)=== false){
+         $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+      }
+      
+      if($file_size > 5097152){
+         $errors[]='File size must be excately 2 MB';
+      }
+      
+      if(empty($errors)==true){
+         move_uploaded_file($file_tmp,"uploads/verification/".$file_name);
+         //echo "Success";
+      }else{
+            echo '<script language="javascript">';
+        echo 'alert("Invalid file format. Allowed Extensions JPEG,JPG,PNG,PDF. Resubmit the form with valid Parameters!!")';
+        echo '</script>';
+
+        $URL="education-verification.php";
+        echo "<script>location.href='$URL'</script>";
+
+          exit;
+      }
+   }
+
+    
+   
+	
+	
+   
+    try
+    {
+        
+            $stmt = $db_con->prepare("INSERT INTO verifications(verification_unique_id,service,fullName,fathername,mobile,alternativemobile,country,state,district,acceptverficationchecks,candidate_name,register_number,college_name,admission_year,completion_year,comments,division,degree_obtained,subject_major,course_type,university,university_location,file1,file2,file3,file4,file5,file6,status,date_created,session_user_id,type) VALUES('$verification_unique_id','$service','$fullName','$fathername','$mobile','$alternativemobile','$country','$state','$district','$acceptverficationchecks','$candidate_name','$register_number','$college_name','$admission_year','$completion_year','$comments','$division','$degree_obtained','$subject_major','$course_type','$university','$university_location','$file1','$file2','$file3','$file4','$file5','$file6','$status','$date_created','$session_user_id','$type')");
+ 
+			 
+			 
+			
+
+            if($stmt->execute())
+            {
+                
+                
+                
+           if($file1 !="")
+{             
+   $f1 = "http://factsverify.com/myfacts/uploads/verification/".$file1;       
+}
+   if($file2 !="")
+{  
+    $f2 = "http://factsverify.com/myfacts/uploads/verification/".$file2;     
+}
+   if($file3 !="")
+{  
+     $f3 = "http://factsverify.com/myfacts/uploads/verification/".$file3;  
+}
+   if($file4 !="")
+{  
+      $f4 = "http://factsverify.com/myfacts/uploads/verification/".$file4;  
+}
+   if($file5 !="")
+{  
+       $f5 = "http://factsverify.com/myfacts/uploads/verification/".$file5;       
+}
+   if($file6 !="")
+{  
+        $f6 = "http://factsverify.com/myfacts/uploads/verification/".$file6;  
+}
+                
+               
+ include_once('/home/factstra/public_html/factsverify.com/phpmailer/PHPMailerAutoload.php');
+
+$mail = new PHPMailer(); // create a new object
+$mail->IsSMTP(); // enable SMTP
+$mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
+$mail->SMTPAuth = true; // authentication enabled
+$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+$mail->Host = "smtp.gmail.com";
+$mail->Port = 465; // or 587
+$mail->IsHTML(true);
+$mail->Username = "mytranscript@factstranscript.com";
+$mail->Password = "veerakiran2019";
+$mail->SetFrom("techs@ibeesolutions.com");
+$mail->Subject = "My Facts";
+$mail->Body = "<h1>Hello Manager</h1>
+<p>Given below are the detail of new My Facts</p>
+<p>Service:".$service."</p>
+<p>Full Name:".$fullName."</p>
+<p>Mobile:".$mobile."</p>
+<h3>Documents</h3>
+
+<p><a href=".$f1.">".$f1."</a></p>
+<p><a href=".$f2.">".$f2."</a></p>
+<p><a href=".$f3.">".$f3."</a></p>
+<p><a href=".$f4.">".$f4."</a></p>
+<p><a href=".$f5.">".$f5."</a></p>
+<p><a href=".$f6.">".$f6."</a></p>";
+
+$mail->AddAddress("verify@factsverify.com");
+
+  $mail->Send();
+  
+  
+  
+  //Mail to user
+  
+  
+  $mail = new PHPMailer(); // create a new object
+$mail->IsSMTP(); // enable SMTP
+$mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
+$mail->SMTPAuth = true; // authentication enabled
+$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+$mail->Host = "smtp.gmail.com";
+$mail->Port = 465; // or 587
+$mail->IsHTML(true);
+$mail->Username = "verify@factsverify.com";
+$mail->Password = "facts2308";
+$mail->SetFrom("techs@ibeesolutions.com");
+$mail->Subject = "My Facts";
+$mail->Body = "<h1>Hi.$fullName</h1>
+<p>Given below are the detail of new My Facts</p>
+<p>Service:".$service."</p>
+<p>Full Name:".$fullName."</p>
+<p>Mobile:".$mobile."</p>
+<h3>Documents</h3>
+
+<p><a href=".$f1.">".$f1."</a></p>
+<p><a href=".$f2.">".$f2."</a></p>
+<p><a href=".$f3.">".$f3."</a></p>
+<p><a href=".$f4.">".$f4."</a></p>
+<p><a href=".$f5.">".$f5."</a></p>
+<p><a href=".$f6.">".$f6."</a></p>";
+
+$mail->AddAddress($email_user);
+
+  $mail->Send();
+        
+                
+             
+                
+                
+                echo '<script language="javascript">';
+				echo 'alert("Verification Submitted Successfully!")';
+				echo '</script>';
+				
+				$URL="order-status.php";
+				echo "<script>location.href='$URL'</script>";
+            }
+            else
+            {
+                echo "Query could not execute !";
+            }
+
+        }
+	
+	 catch(PDOException $e){
+        echo $e->getMessage();
+    }
+}
+
+else if(isset($_POST['raiseTicket']))
+{
+	//$base_url = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on' ? 'https' : 'http' ) . '://' .  $_SERVER['HTTP_HOST'];
+	//$url = $base_url . $_SERVER["REQUEST_URI"];
+	//$urlvars = parse_url($url); 
+	 $res1 = $arr = explode("-", $_POST['order_details'], 2);
+	 $vid = $arr[0];
+	
+					
+	$order_details = $_POST['order_details'];
+	$order_id = $vid;
+	$subject      = $_POST['subject'];
+	$message = $_POST['message'];
+	$session_email_id      = $_SESSION['user_email'];	
+	$type  = $_POST['type'];
+	
+
+
+  include_once('/home/factstra/public_html/factsverify.com/phpmailer/PHPMailerAutoload.php');
+
+$mail = new PHPMailer(); // create a new object
+$mail->IsSMTP(); // enable SMTP
+$mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
+$mail->SMTPAuth = true; // authentication enabled
+$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+$mail->Host = "smtp.gmail.com";
+$mail->Port = 465; // or 587
+$mail->IsHTML(true);
+$mail->Username = "verify@factsverify.com";
+$mail->Password = "facts2308";
+$mail->SetFrom("techs@ibeesolutions.com");
+$mail->Subject = "My Facts Payment Receipt";
+$mail->Body = "<h1>Hi </h1>
+<p></p>";
+
+
+$mail->AddAddress("officialtranscript@factsverify.com");
+
+$mail->Send();  
+  
+  
+  
+
+                
+
+	 try
+    {
+        
+            $stmt = $db_con->prepare("INSERT INTO tickets(order_id,order_details,subject,message,session_email_id,user_notification,type) 
+            VALUES('$order_id','$order_details','$subject','$message','$session_email_id','1','$type')");
+			
+            if($stmt->execute())
+            {
+                
+                  echo '<script language="javascript">';
+				echo 'alert("Ticket Raised Successfully!")';
+				echo '</script>';
+				
+				$URL="raise-ticket.php";
+				echo "<script>location.href='$URL'</script>";
+				
+            }
+            else
+            {
+                echo "Query could not execute !";
+            }
+
+        }
+	
+	 catch(PDOException $e){
+        echo $e->getMessage();
+    }
+}
+
+
+else if(isset($_POST['adminraiseTicket']))
+{
+  //$base_url = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on' ? 'https' : 'http' ) . '://' .  $_SERVER['HTTP_HOST'];
+  //$url = $base_url . $_SERVER["REQUEST_URI"];
+  //$urlvars = parse_url($url); 
+   $res1 = $arr = explode("-", $_POST['order_details'], 2);
+   $vid = $arr[0];
+  
+          
+  $order_details = $_POST['order_details'];
+  $order_id = $vid;
+  $subject      = $_POST['subject'];
+  $admin_reply = $_POST['admin_reply'];
+  $message = $_POST['message'];
+  $session_email_id      = $_POST['user_email']; 
+  $type  = $_POST['type'];
+  
+
+ include_once('/home/factstra/public_html/factsverify.com/phpmailer/PHPMailerAutoload.php');
+
+$mail = new PHPMailer(); // create a new object
+$mail->IsSMTP(); // enable SMTP
+$mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
+$mail->SMTPAuth = true; // authentication enabled
+$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+$mail->Host = "smtp.gmail.com";
+$mail->Port = 465; // or 587
+$mail->IsHTML(true);
+$mail->Username = "verify@factsverify.com";
+$mail->Password = "facts2308";
+$mail->SetFrom("techs@ibeesolutions.com");
+$mail->Subject = "My Transcript Ticket";
+$mail->Body = "<h1>Hi</h1>
+
+<p>You have got a ticket notification from Facts</p>
+<p>Message: ".$message."</p>
+<p>Please login with your credantial details to the below link for communicate</p>
+
+<p>Login here: http://www.factsverify.com/mytranscripts/register.php</p>";
+
+
+$mail->AddAddress($session_email_id);
+
+  $mail->Send();  
+
+   try
+    {
+        
+            $stmt = $db_con->prepare("INSERT INTO tickets(order_id,order_details,subject,message,session_email_id,notification,type) VALUES('$order_id','$order_details','$subject','$admin_reply','$session_email_id','1','$type')");
+      
+            if($stmt->execute())
+            {
+                echo '<script language="javascript">';
+        echo 'alert("Communication Ticket Raised Successfully!")';
+        echo '</script>';
+        
+        $URL="education-verification-adminview.php?vid=".$order_id;
+        echo "<script>location.href='$URL'</script>";
+        
+            }
+            else
+            {
+                echo "Query could not execute !";
+            }
+
+        }
+  
+   catch(PDOException $e){
+        echo $e->getMessage();
+    }
+}
+
+
+else if(isset($_POST['adminraiseTicketofficial']))
+{
+   
+   
+  $order_id = $_POST['order_id'];
+   $order_details = $_POST['order_id'];
+  $subject      = $_POST['subject'];
+  $admin_reply = $_POST['admin_reply'];
+  $message = $_POST['message'];
+  $session_email_id = $_POST['user_session_email']; 
+  $type  = $_POST['type'];
+
+ 
+
+ include_once('/home/factstra/public_html/factsverify.com/phpmailer/PHPMailerAutoload.php');
+
+$mail = new PHPMailer(); // create a new object
+$mail->IsSMTP(); // enable SMTP
+$mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
+$mail->SMTPAuth = true; // authentication enabled
+$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+$mail->Host = "smtp.gmail.com";
+$mail->Port = 465; // or 587
+$mail->IsHTML(true);
+$mail->Username = "verify@factsverify.com";
+$mail->Password = "facts2308";
+$mail->SetFrom("techs@ibeesolutions.com");
+$mail->Subject = "My Transcripts Ticket Notification";
+$mail->Body = "<h1>Hi</h1>
+
+<p>You have got a ticket notification from Facts</p>
+<p>Message: ".$message."</p>
+<p>Please login with your credantial details to the below link for communicate</p>
+
+<p>Login here: http://www.factsverify.com/mytranscripts/register.php</p>";
+
+
+$mail->AddAddress($session_email_id);
+
+  $mail->Send();  
+
+   try
+    {
+        
+            $stmt = $db_con->prepare("INSERT INTO tickets(order_id,order_details,subject,message,session_email_id,type,notification) VALUES('$order_id','$order_details','$subject','$admin_reply','$session_email_id','$type','1')");
+      
+            if($stmt->execute())
+            {
+                echo '<script language="javascript">';
+        echo 'alert("Communication Ticket Raised Successfully!")';
+        echo '</script>';
+        
+        $URL="view-officialtranscripts-admin.php?vid=".$order_id;
+        echo "<script>location.href='$URL'</script>";
+        
+            }
+            else
+            {
+                echo "Query could not execute !";
+            }
+
+        }
+  
+   catch(PDOException $e){
+        echo $e->getMessage();
+    }
+}
+
+
+
+
+else if(isset($_POST['raiseTicketHistory']))
+{
+	$order_id = $_POST['order_id'];				
+
+	$stmt = $db_con->prepare("SELECT * FROM verifications WHERE session_user_id=:session_user_id and verification_unique_id =:order_id");
+	$stmt->execute(array(":session_user_id"=>$_SESSION['user_email'],":order_id"=>$order_id));
+	$count = $stmt->rowCount();
+	$row=$stmt->fetch(PDO::FETCH_ASSOC);
+										
+					
+					
+					
+	$order_details = $order_id."-".$row['service'];
+	$subject      = $_POST['subject'];
+	$message = $_POST['message'];
+	$session_email_id      = $_SESSION['user_email'];
+	$type  = $_POST['type'];
+
+
+
+
+	 try
+    {
+        
+            $stmt = $db_con->prepare("INSERT INTO tickets(order_id,order_details,subject,message,session_email_id,type) VALUES('$order_id','$order_details','$subject','$message','$session_email_id','$type')");
+			
+            if($stmt->execute())
+            {
+                echo '<script language="javascript">';
+				echo 'alert("Ticket Raised Successfully!")';
+				echo '</script>';
+				
+				$URL="raise-ticket-history.php?orderid=".$order_id;
+				echo "<script>location.href='$URL'</script>";
+				
+            }
+            else
+            {
+                echo "Query could not execute !";
+            }
+
+        }
+	
+	 catch(PDOException $e){
+        echo $e->getMessage();
+    }
+}
+
+
+
+
+else if(isset($_POST['addverificationPayment']))
+{
+	$res1 = $arr = explode("-", $_POST['service'], 2);
+	$vid = $arr[0];
+	$uniqueid = $vid;
+	$service = $_POST['service'];
+	$amount = $_POST['amount'];
+	$reference_id = $_POST['reference_id'];
+	$rand9 = mt_rand(100000,999999);
+	$type  = $_POST['type'];
+
+							 
+
+   if(!empty($_FILES['document1']['name'])){
+      $errors= array();
+      $filename = trim(addslashes($_FILES['document1']['name']));
+      $filename = str_replace(' ', '_', $filename);
+      $file_name = time().$rand9.$filename;
+      $file_size =$_FILES['document1']['size'];
+      $file_tmp =$_FILES['document1']['tmp_name'];
+      $file_type=$_FILES['document1']['type'];
+	  $document1= time().$rand9.$_FILES['document1']['name'];
+	  
+      $file_ext_var1= explode('.',$document1);
+	  $file_ext = end($file_ext_var1);
+      
+      $expensions= array("jpeg","jpg","png","pdf");
+      
+      if(in_array($file_ext,$expensions)=== false){
+         $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+      }
+      
+      if($file_size > 5097152){
+         $errors[]='File size must be excately 2 MB';
+      }
+      
+      if(empty($errors)==true){
+		  
+		  
+         move_uploaded_file($file_tmp,"uploads/payments/".$file_name);
+        
+          
+      }else{
+           echo '<script language="javascript">';
+        echo 'alert("Invalid file format. Allowed Extensions JPEG,JPG,PNG,PDF. Resubmit the form with valid Parameters!!")';
+        echo '</script>';
+
+        $URL="payment.php";
+        echo "<script>location.href='$URL'</script>";
+
+          exit;
+      }
+   }
+   
+
+   
+   
+	$attachment = $file_name;
+	$session_user_id      = $_SESSION['user_email'];
+
+	 try
+    {
+		
+		$stmt = $db_con->prepare("SELECT * FROM verifications WHERE verification_unique_id = '$uniqueid'");
+		$stmt->execute();
+		$count = $stmt->rowCount();
+		$row=$stmt->fetch(PDO::FETCH_ASSOC);
+		
+		$amount = $row['amount'];
+		
+		if($amount != "")
+		{
+			$totalamount = $row['amount']+$_POST['amount'];
+		}
+		else{
+			$totalamount = $_POST['amount'];
+		}
+        
+		$stmt = $db_con->prepare("UPDATE verifications SET amount = '$totalamount' where verification_unique_id = '$uniqueid'");
+			
+        $stmt->execute();
+		
+		
+		
+		$paid_amount = $_POST['amount'];
+		
+		$stmt = $db_con->prepare("INSERT INTO verification_payments(orderid,service,reference_id,amount,attachment,session_user_id,type) VALUES('$uniqueid','$service','$reference_id','$paid_amount','$attachment','$session_user_id','$type')");
+		
+		 
+		
+		if($stmt->execute())
+		{
+		    
+		    
+		    
+		    
+		    
+	   if($attachment !="")
+{             
+   $f1 = "http://factsverify.com/myfacts/uploads/payments/".$attachment;       
+}
+ 
+                
+               
+ include_once('/home/factstra/public_html/factsverify.com/phpmailer/PHPMailerAutoload.php');
+
+$mail = new PHPMailer(); // create a new object
+$mail->IsSMTP(); // enable SMTP
+$mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
+$mail->SMTPAuth = true; // authentication enabled
+$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+$mail->Host = "smtp.gmail.com";
+$mail->Port = 465; // or 587
+$mail->IsHTML(true);
+$mail->Username = "verify@factsverify.com";
+$mail->Password = "facts2308";
+$mail->SetFrom("techs@ibeesolutions.com");
+$mail->Subject = "My Facts Payment Receipt";
+$mail->Body = "<h1>Hello Manager</h1>
+<p>Given below are the detail of My Facts Payment</p>
+<p>Service:".$service."</p>
+<p>Amount:".$amount."</p>
+<p>Mobile:".$mobile."</p>
+<h3>Document</h3>
+<p><a href=".$f1.">".$f1."</a></p>";
+
+$mail->AddAddress("verify@factsverify.com");
+
+  $mail->Send();	    
+		    	    
+		    
+		    
+    
+		    
+		    
+			echo '<script language="javascript">';
+			echo 'alert("Updated Successfully!")';
+			echo '</script>';
+			
+			$URL="payment.php";
+			echo "<script>location.href='$URL'</script>";
+			
+			//header("location:update-payment.php?status=Successful");
+		}
+		else
+		{
+			echo "Query could not execute !";
+		}
+
+	}
+
+	 catch(PDOException $e){
+        echo $e->getMessage();
+    }
+}
+
+else if(isset($_POST['updatePayment']))
+{
+	
+	$service = $_POST['service'];
+	$reference_id      = $_POST['reference_id'];
+	
+	
+	$rand9 = mt_rand(100000,999999);
+
+
+							 
+
+   if(!empty($_FILES['document1']['name'])){
+      $errors= array();
+       $filename = trim(addslashes($_FILES['document1']['name']));
+      $filename = str_replace(' ', '_', $filename);
+      $file_name = time().$rand9.$filename;
+      $file_size =$_FILES['document1']['size'];
+      $file_tmp =$_FILES['document1']['tmp_name'];
+      $file_type=$_FILES['document1']['type'];
+	  $document1= time().$rand0.$_FILES['document1']['name'];
+	  
+      $file_ext_var1= explode('.',$document1);
+	  $file_ext = end($file_ext_var1);
+      
+      $expensions= array("jpeg","jpg","png","pdf");
+      
+      if(in_array($file_ext,$expensions)=== false){
+         $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+      }
+      
+      if($file_size > 5097152){
+         $errors[]='File size must be excately 2 MB';
+      }
+      
+      if(empty($errors)==true){
+         move_uploaded_file($file_tmp,"uploads/payments/".$file_name);
+         echo "Success";
+         
+          
+      }else{
+          echo '<script language="javascript">';
+        echo 'alert("Invalid file format. Allowed Extensions JPEG,JPG,PNG,PDF. Resubmit the form with valid Parameters!!")';
+        echo '</script>';
+
+        $URL="payment.php";
+        echo "<script>location.href='$URL'</script>";
+          exit;
+      }
+   }
+   
+
+   
+   
+	$attachment = $document1;
+	$session_user_id      = $_SESSION['user_email'];
+
+	 try
+    {
+        
+            $stmt = $db_con->prepare("INSERT INTO payments(service,reference_id,attachment,session_user_id) VALUES('$service','$reference_id','$attachment','$session_user_id')");
+			
+            if($stmt->execute())
+            {
+				echo '<script language="javascript">';
+				echo 'alert("Updated Successfully!")';
+				echo '</script>';
+				
+				$URL="update-payment.php";
+				echo "<script>location.href='$URL'</script>";
+				
+                //header("location:update-payment.php?status=Successful");
+            }
+            else
+            {
+                echo "Query could not execute !";
+            }
+
+        }
+	
+	 catch(PDOException $e){
+        echo $e->getMessage();
+    }
+}
+
+else if(isset($_POST['updateStatus']))
+{
+	
+	$unique_id = $_POST['verification_unique_id'];
+	$facts_history      = $_POST['facts_history'];
+	$status      = $_POST['status'];
+	
+	 try
+    {
+        
+	 $stmt = $db_con->prepare("UPDATE verifications SET status = '$status', facts_history = '$facts_history',notification='1' where verification_unique_id = '$unique_id'");
+			
+            if($stmt->execute())
+            {
+				
+				echo '<script language="javascript">';
+				echo 'alert("Updated Successfully!")';
+				echo '</script>';
+				
+				$URL="education-verification-adminview.php?vid=".$unique_id;
+				echo "<script>location.href='$URL'</script>";
+				
+                //header("location:education-verification-adminview.php?vid=y".$unique_id);
+            }
+            else
+            {
+                echo "Query could not execute !";
+            }
+			 }
+	
+	 catch(PDOException $e){
+        echo $e->getMessage();
+    }
+	
+}
+else if(isset($_POST['adminReplyTicketot']))
+{
+  
+    $parent_tid = $_POST['parent_ticket_id'];  
+  
+  $tid = $_POST['ticket_id'];    
+  $order_details = $_POST['order_details'];
+  $order_id = $_POST['order_details'];
+  $subject      = $_POST['subject'];
+  $message = $_POST['message'];
+  $session_email_id      = $_POST['session_email_id']; 
+  $type  = $_POST['type'];
+  $parent_id = $_POST['parent_ticket_id'];
+  $currentdate = date("Y-m-d H:i:s"); 
+  
+ include_once('/home/factstra/public_html/factsverify.com/phpmailer/PHPMailerAutoload.php');
+
+$mail = new PHPMailer(); // create a new object
+$mail->IsSMTP(); // enable SMTP
+$mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
+$mail->SMTPAuth = true; // authentication enabled
+$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+$mail->Host = "smtp.gmail.com";
+$mail->Port = 465; // or 587
+$mail->IsHTML(true);
+$mail->Username = "verify@factsverify.com";
+$mail->Password = "facts2308";
+$mail->SetFrom("techs@ibeesolutions.com");
+$mail->Subject = "My Transcripts Raise Ticket";
+$mail->Body = "<h1>Hi</h1>
+
+<p>You have got a notification from Facts</p>
+<p>Message: ".$message."</p>
+<p>Please login with your credantial details to the below link for communicate</p>
+<p>Login here: http://www.factsverify.com/mytranscripts/register.php</p>";
+
+
+
+$mail->AddAddress($session_email_id);
+
+ $mail->Send();  
+
+   try
+    {
+        
+      
+    
+  
+
+
+
+
+
+            $stmt = $db_con->prepare("INSERT INTO tickets(parent_ticket_id,order_id,order_details,subject,admin_reply,session_email_id,type,datetime) VALUES('$parent_id','$order_id','$order_details','$subject','$message','$session_email_id','$type','$currentdate')");
+      
+      
+            if($stmt->execute())
+            {
+                
+           
+                 $stmt = $db_con->prepare("UPDATE tickets SET notification = '0' where ticket_id='$parent_tid' and type='officialtranscripts'");
+   $stmt->execute();
+        
+         
+   $stmt = $db_con->prepare("UPDATE tickets SET notification = '0' where parent_ticket_id='$parent_tid' and type='officialtranscripts'");
+   $stmt->execute();
+   
+   
+               
+        
+                echo '<script language="javascript">';
+        echo 'alert("Replied Successfully!")';
+        echo '</script>';
+        
+        $URL="reply-ticket-officialtranscripts.php?tid=".$_POST['ticket_id'];    
+        echo "<script>location.href='$URL'</script>";
+            }
+            else
+            {
+                echo "Query could not execute !";
+            }
+       }
+  
+   catch(PDOException $e){
+        echo $e->getMessage();
+    }
+  
+}
+
+
+else if(isset($_POST['userReplyTicket']))
+{
+  
+  $res1 = $arr = explode("-", $_POST['order_details'], 2);
+   $vid = $arr[0];
+  
+  $tid = $_POST['ticket_id'];     
+  $order_details = $_POST['order_details'];
+  $order_id = $vid;
+  $subject      = $_POST['subject'];
+  $message = $_POST['message'];
+  $session_email_id      = $_SESSION['user_email']; 
+  $type  = $_POST['type'];
+  $parent_id = $_POST['parent_ticket_id'];
+  
+ include_once('/home/factstra/public_html/factsverify.com/phpmailer/PHPMailerAutoload.php');
+
+$mail = new PHPMailer(); // create a new object
+$mail->IsSMTP(); // enable SMTP
+$mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
+$mail->SMTPAuth = true; // authentication enabled
+$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+$mail->Host = "smtp.gmail.com";
+$mail->Port = 465; // or 587
+$mail->IsHTML(true);
+$mail->Username = "verify@factsverify.com";
+$mail->Password = "facts2308";
+$mail->SetFrom("techs@ibeesolutions.com");
+$mail->Subject = "My Transcripts Raise Ticket";
+$mail->Body = "<h1>Hi </h1>";
+
+
+$mail->AddAddress("officialtranscript@factsverify.com");
+
+$mail->Send();  
+
+ 
+  
+  
+  
+
+
+   try
+    {
+        
+      
+            $stmt = $db_con->prepare("INSERT INTO tickets(parent_ticket_id,order_id,order_details,subject,message,session_email_id,type) VALUES('$parent_id','$order_id','$order_details','$subject','$message','$session_email_id','$type')");
+      
+            if($stmt->execute())
+            {
+        
+                echo '<script language="javascript">';
+        echo 'alert("sai  Successfully!")';
+        echo '</script>';
+        
+          $URL="reply-ticket-user.php?tid=".$tid;
+        echo "<script>location.href='$URL'</script>";
+            }
+            else
+            {
+                echo "Query could not execute !";
+            }
+       }
+  
+   catch(PDOException $e){
+        echo $e->getMessage();
+    }
+  
+}
+
+
+else if(isset($_POST['adminReadTicket'])) {
+
+
+
+ $tid = $_POST['parent_ticket_id'];  
+ 
+
+ 
+  
+
+  
+   $stmt = $db_con->prepare("UPDATE tickets SET notification = '0' where ticket_id='$tid' and type='officialtranscripts'");
+   $stmt->execute();
+        
+         
+   $stmt = $db_con->prepare("UPDATE tickets SET notification = '0' where parent_ticket_id='$tid' and type='officialtranscripts'");
+   $stmt->execute();
+   
+     	echo '<script language="javascript">';
+        echo 'alert("Ticket marked as Read")';
+        echo '</script>';
+
+        $URL="tickets-officialtranscripts.php";
+        echo "<script>location.href='$URL'</script>";
+
+          exit;
+
+}
+
+
+else if(isset($_POST['adminReplyTicket']))
+{
+  
+  $res1 = $arr = explode("-", $_POST['order_details'], 2);
+   $vid = $arr[0];
+  
+  $tid = $_POST['ticket_id'];    
+  $order_details = $_POST['order_details'];
+  $order_id = $vid;
+  $subject      = $_POST['subject'];
+  $message = $_POST['message'];
+  $session_email_id      = $_POST['session_email_id']; 
+  $type  = $_POST['type'];
+  $parent_id = $_POST['parent_ticket_id'];
+  
+
+ include_once('/home/factstra/public_html/factsverify.com/phpmailer/PHPMailerAutoload.php');
+
+$mail = new PHPMailer(); // create a new object
+$mail->IsSMTP(); // enable SMTP
+$mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
+$mail->SMTPAuth = true; // authentication enabled
+$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+$mail->Host = "smtp.gmail.com";
+$mail->Port = 465; // or 587
+$mail->IsHTML(true);
+$mail->Username = "verify@factsverify.com";
+$mail->Password = "facts2308";
+$mail->SetFrom("techs@ibeesolutions.com");
+$mail->Subject = "My Transcripts Ticket Notification";
+$mail->Body = "<h1>Hi</h1>
+
+<p>You have got a ticket notification from Facts</p>
+<p>Message: ".$message."</p>
+<p>Please login with your credantial details to the below link for communicate</p>
+
+<p>Login here: http://www.factsverify.com/mytranscripts/register.php</p>";
+
+
+$mail->AddAddress($session_email_id);
+
+  $mail->Send();  
+  
+  
+   try
+    {
+        
+      
+            $stmt = $db_con->prepare("INSERT INTO tickets(parent_ticket_id,order_id,order_details,subject,admin_reply,session_email_id,type) VALUES('$parent_id','$order_id','$order_details','$subject','$message','$session_email_id','$type')");
+      
+            if($stmt->execute())
+            {
+        
+                echo '<script language="javascript">';
+        echo 'alert("Replied Successfully!")';
+        echo '</script>';
+        
+        $URL="reply-ticket.php?tid=".$tid;
+        echo "<script>location.href='$URL'</script>";
+            }
+            else
+            {
+                echo "Query could not execute !";
+            }
+       }
+  
+   catch(PDOException $e){
+        echo $e->getMessage();
+    }
+  
+}
+
+else{
+  echo "INVALID REQUEST";
+}
+?>
